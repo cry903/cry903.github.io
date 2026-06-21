@@ -3,7 +3,7 @@ export const SITE_CONFIG = {
   fullName: 'Layla',
   subtitle: '沟水相逢，尽是他乡之客',
   bio: '热爱技术与创作，记录学习路上的点点滴滴。欢迎来到我的个人主页！',
-  avatar: '/avatar.png',
+  avatar: '/avatar.svg',
 } as const;
 
 export const SKILLS: string[] = [
