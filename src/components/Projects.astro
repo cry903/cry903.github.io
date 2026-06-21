@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+
+const projects = await getCollection('projects');
+const featured = projects.filter((p) => p.data.featured);
+---
+
+<section class="section" id="projects">
+  <h2 class="section-title">我的项目</h2>
+  <div class="projects-grid">
+    {featured.map((project) => (
+      <ProjectCard
+        name={project.data.name}
+        description={project.data.description}
+        tags={project.data.tags}
+        image={project.data.image}
+        link={project.data.link}
+        linkText={project.data.linkText}
+      />
+    ))}
+  </div>
+</section>
+
+<style>
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  @media (max-width: 900px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
