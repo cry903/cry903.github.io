@@ -2,46 +2,42 @@
 import { SITE_CONFIG, SKILLS } from '../config';
 ---
 
-<section class="section reveal" id="about">
-  <h2 class="section-title">关于我</h2>
-  <p class="about-bio">{SITE_CONFIG.bio}</p>
-  <div class="skills-cloud">
-    {SKILLS.map((skill) => <span class="skill-tag">{skill}</span>)}
+<section class="section container" id="about">
+  <div class="section-head">
+    <h2 class="section-title">关于我</h2>
   </div>
+  <p class="prose about-bio">{SITE_CONFIG.bio}</p>
+  <p class="skills-row">
+    {SKILLS.map((skill, i) => (
+      <>
+        {i > 0 && <span class="skills-sep" aria-hidden="true">/</span>}
+        <span class="skill-tag">{skill}</span>
+      </>
+    ))}
+  </p>
 </section>
 
 <style>
   .about-bio {
-    max-width: 600px;
-    margin: 0 auto 36px;
-    text-align: center;
-    color: var(--color-text-muted);
-    font-size: 1.05rem;
-    line-height: 1.8;
+    margin-bottom: var(--space-sm);
   }
 
-  .skills-cloud {
+  .skills-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    max-width: 500px;
-    margin: 0 auto;
+    align-items: baseline;
+    gap: var(--space-xs);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+  }
+
+  .skills-sep {
+    color: var(--color-rule);
   }
 
   .skill-tag {
-    padding: 6px 18px;
-    border: 1px solid var(--color-primary);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--color-primary-light);
-    background: rgba(108, 99, 255, 0.08);
-    transition: all var(--transition);
-  }
-
-  .skill-tag:hover {
-    background: rgba(108, 99, 255, 0.2);
-    box-shadow: 0 0 16px rgba(108, 99, 255, 0.3);
-    transform: translateY(-2px);
+    color: var(--color-ink);
   }
 </style>

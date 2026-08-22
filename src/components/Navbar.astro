@@ -8,105 +8,88 @@ const navLinks = [
 ];
 ---
 
-<header class="navbar" id="navbar">
-  <div class="navbar-inner">
-    <a href="/" class="navbar-brand">{SITE_CONFIG.name}</a>
-    <nav class="navbar-links" id="navbar-links">
-      {navLinks.map(link => (
-        <a href={link.href} class="navbar-link">
-          {link.label}
-        </a>
-      ))}
+<header class="nav-mast" role="banner">
+  <div class="container nav-mast-inner">
+    <a href="/" class="mast-name">{SITE_CONFIG.name}</a>
+    <nav class="mast-nav" aria-label="主导航">
+      <ul>
+        {navLinks.map((link) => (
+          <li>
+            <a href={link.href} class="mast-link">
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
     </nav>
   </div>
+  <div class="mast-rule double" aria-hidden="true"></div>
 </header>
 
 <style>
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    height: var(--nav-height);
+  .nav-mast {
     background: transparent;
-    backdrop-filter: blur(0px);
-    transition: background var(--transition), backdrop-filter var(--transition);
   }
 
-  .navbar.scrolled {
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--color-border);
+  .nav-mast-inner {
+    padding-block: var(--space-md);
+    text-align: center;
   }
 
-  .navbar-inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 24px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .navbar-brand {
-    font-size: 1.25rem;
+  .mast-name {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 2.75rem);
     font-weight: 700;
-    color: var(--color-text);
-    letter-spacing: 1px;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    color: var(--color-ink);
   }
 
-  .navbar-brand:hover {
-    color: var(--color-primary-light);
+  .mast-name:hover {
+    color: var(--color-accent);
   }
 
-  .navbar-links {
+  .mast-nav ul {
     display: flex;
-    gap: 32px;
+    justify-content: center;
+    gap: var(--space-md);
+    list-style: none;
+    margin-top: var(--space-sm);
   }
 
-  .navbar-link {
-    color: var(--color-text-muted);
-    font-size: 0.95rem;
-    font-weight: 500;
-    position: relative;
-    padding: 4px 0;
+  .mast-link {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
   }
 
-  .navbar-link:hover,
-  .navbar-link[data-current='true'] {
-    color: var(--color-text);
+  .mast-link:hover {
+    color: var(--color-ink);
+    border-bottom-color: var(--color-accent);
   }
 
-  .navbar-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
-    transition: width var(--transition);
+  .mast-link[data-current='true'] {
+    color: var(--color-accent);
   }
 
-  .navbar-link:hover::after,
-  .navbar-link[data-current='true']::after {
-    width: 100%;
+  .mast-rule.double {
+    border-top: var(--rule-hair) solid var(--color-rule);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+    height: 4px;
+  }
+
+  @media (max-width: 480px) {
+    .mast-nav ul {
+      gap: var(--space-sm);
+    }
   }
 </style>
 
 <script>
-  // Scroll transparency
-  const navbar = document.getElementById('navbar');
-  if (navbar) {
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 50);
-    });
-  }
-  // Highlight current page link
   const currentPath = window.location.pathname;
-  document.querySelectorAll('.navbar-link').forEach((link) => {
+  document.querySelectorAll('.mast-link').forEach((link) => {
     const href = link.getAttribute('href');
     if (href && (href === currentPath || (href !== '/' && currentPath.startsWith(href)))) {
       link.setAttribute('data-current', 'true');
